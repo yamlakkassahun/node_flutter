@@ -5,13 +5,14 @@ import 'package:node_flutter1/models/category.dart';
 
 // var url = Uri.parse('https://192.168.8.152:3443/category');
 
-var url = Uri.http('192.168.8.152:3000', '/category');
+var url = Uri.http('192.168.137.52:3000', '/category');
 
 class CategoryApiService {
 
   Future<List<Category>> getAllCategory() async {
     var res = await http.get(url);
     print(res.statusCode);
+    print(res.body);
     if(res.statusCode == 200){
       List listResponse = json.decode(res.body);
       return listResponse

@@ -34,21 +34,25 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     // TODO: implement initState
+    apiService.getAllCategory();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Center(
           child:FutureBuilder(
             future: apiService.getAllCategory(),
             builder: (context, snapshot){
               categoryList = snapshot.data ?? [];
               return ListView.builder(
                 itemCount: categoryList.length,
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index){
                   Category category = categoryList[index] ?? [];
                   return Padding(
@@ -64,8 +68,36 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               );
             },
-          )
-      ),
+          ),
+          // child: Container(
+          //   height: 110,
+          //   child: ListView.builder(
+          //     itemCount: categoryList.length,
+          //     shrinkWrap: true,
+          //     physics: ClampingScrollPhysics(),
+          //     scrollDirection: Axis.horizontal,
+          //     itemBuilder: (context, index) {
+          //       // return Category (categoryList[index].image.replaceAll("\\",""), categories[index].title, index, categories[index].id);
+          //       return ListView.builder(
+          //         itemCount: categoryList.length,
+          //         itemBuilder: (context, index) {
+          //           Category category = categoryList[index] ?? [];
+          //           return Padding(
+          //             padding: EdgeInsets.all(8.0),
+          //             child: Column(
+          //               children: [
+          //                 Text(category.id),
+          //                 Text(category.title),
+          //                 Text(category.image),
+          //               ],
+          //             ),
+          //           );
+          //         },
+          //       );
+          //     },
+          //   ),
+          // ),
+        )
     );
   }
 }
